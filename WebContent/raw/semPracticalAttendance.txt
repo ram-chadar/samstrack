@@ -1,0 +1,340 @@
+<%@include file="prevent.jsp"%>
+<%@ page language="java" import="java.util.*"%>
+
+<html>
+<head>
+<title>Sem Practical attendance Result</title>
+<meta name="viewport" content="=600, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/dataTables.bootstrap.css" />
+
+<link href="https://fonts.googleapis.com/css?family=Fahkwang"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/attendance.css">
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script src="js/jquery.dataTables.js"></script>
+<script src="js/dataTables.bootstrap.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#dataTables-example').dataTable();
+	});
+</script>
+<script src="assets/js/anchor.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<form action="semPracticalAttendance" name="semPracticalAttendance"
+					class="form-data">
+					<div class="row">
+						<div class="col-md-3 col-xs-12">
+
+							<div class="form-resp">
+								<H4>MANDATORY FIELDS</H4>
+
+								<div class="form-group">
+									<label for="Year">Year</label> <input type="number"
+										class="form-control" id="ayear" placeholder="Acadmic Year"
+										name="accYear" value="<%=(new java.util.Date()).getYear()+1900%>">
+								</div>
+
+								<div class="form-group">
+									<label for="month">Month From</label> <select
+										class="form-control form-control-md" id="monthFrom"
+										name="monthFrom">
+										<%
+											String monthFrom = (String) request.getAttribute("monthFrom");
+
+											if (monthFrom != null) {
+										%>
+										<option value="${monthFrom }">${monthFrom }</option>
+										<%
+											}
+										%>
+										<option value="01">01</option>
+										<option value="02">02</option>
+										<option value="03">03</option>
+										<option value="04">04</option>
+										<option value="05">05</option>
+										<option value="06">06</option>
+										<option value="07">07</option>
+										<option value="08">08</option>
+										<option value="09">09</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="month">Month To</label> <select
+										class="form-control form-control-md" id="monthTo"
+										name="monthTo">
+										<%
+											String monthTo = (String) request.getAttribute("monthTo");
+
+											if (monthTo != null) {
+										%>
+										<option value="${monthTo }">${monthTo }</option>
+										<%
+											}
+										%>
+										<option value="01">01</option>
+										<option value="02">02</option>
+										<option value="03">03</option>
+										<option value="04">04</option>
+										<option value="05">05</option>
+										<option value="06">06</option>
+										<option value="07">07</option>
+										<option value="08">08</option>
+										<option value="09">09</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="branchName">Select Branch</label> <select
+										class="form-control form-control-md" id="bn" name="bn">
+
+										<option
+											value="<%=(String) session.getAttribute("userBranch")%>"><%=(String) session.getAttribute("userBranch")%>
+										</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="division">Divison</label> <select
+										class="form-control form-control-md" id="divsion"
+										name="division">
+										<%
+											String division = (String) request.getAttribute("division");
+
+											if (division != null) {
+										%>
+										<option value="${division }">${division }</option>
+										<%
+											}
+										%>
+										<option value="A">A</option>
+										<option value="B">B</option>
+										<option value="C">C</option>
+										<option value="D">D</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="batch">Batch</label> <select
+										class="form-control form-control-md" id="divsion" name="batch">
+										<%
+											String batch = (String) request.getAttribute("batch");
+
+											if (batch != null) {
+										%>
+										<option value="${batch}">${batch}</option>
+										<%
+											}
+										%>
+										<option value="B1">B1</option>
+										<option value="B2">B2</option>
+										<option value="B3">B3</option>
+										<option value="B4">B4</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="sem">Sem</label> <select
+										class="form-control form-control-md" id="sem" name="sem">
+
+										<%
+											String sem = (String) request.getAttribute("sem");
+
+											if (sem != null) {
+										%>
+										<option value="${sem}">${sem}</option>
+										<%
+											}
+										%>
+										<option value="00">Select Sem</option>
+										<option value="01">1</option>
+										<option value="02">2</option>
+										<option value="03">3</option>
+										<option value="04">4</option>
+										<option value="05">5</option>
+										<option value="06">6</option>
+										<option value="07">7</option>
+										<option value="08">8</option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="subject">Subject</label> <select
+										class="form-control form-control-md" id="subject"
+										name="subject">
+										<%
+											String subject = (String) request.getAttribute("subject");
+
+											if (subject != null) {
+										%>
+										<option value="${subject }">${subject}</option>
+										<%
+											}
+										%>
+										<option>Select Subject</option>
+
+									</select>
+								</div>
+
+
+								<div class="form-group">
+									<label for="rollNo">Roll No.</label> <input type="number"
+										class="form-control" id="rollNo" placeholder="Roll NO."
+										name="rollN0" value="${rollNo}">
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-4 col-xs-12">
+							<div class="form-resp">
+								<h5 class="text-center">SEM PRACTICAL ATTENDANCE</h5>
+
+								<div class="table-data">
+									<table class="table table-dark table-striped" border="1">
+										<thead>
+											<tr>
+												<th class="text-center">Total Lecture</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- Total Lectue  -->
+											<%
+												Iterator itr2;
+												List totalDate = (List) request.getAttribute("totaldatesem");
+												if (totalDate != null) {
+													for (itr2 = totalDate.iterator(); itr2.hasNext();) {
+											%>
+
+											<tr>
+												<td class="text-center"><%=itr2.next()%></td>
+											</tr>
+											<%
+												}
+												}
+											%>
+										</tbody>
+									</table>
+
+
+								</div>
+
+
+							</div>
+						</div>
+
+						<!-- 2 nd col end   -->
+						<!-- 3 rd col begin   -->
+
+						<div class="col-md-5 col-xs-12">
+							<div class="form-resp">
+
+								<div class="table-data">
+									<table class="table table-dark table-striped"
+										id="dataTables-example" border="1">
+										<thead>
+											<tr>
+												<th class="text-center">Attend Lecture</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- Attend Lectue  -->
+											<%
+												Iterator itr3;
+												List attendDate = (List) request.getAttribute("attenddatesem");
+												if (attendDate != null) {
+													for (itr3 = attendDate.iterator(); itr3.hasNext();) {
+											%>
+
+											<tr>
+												<td class="text-center"><%=itr3.next()%></td>
+											</tr>
+											<%
+												}
+												}
+											%>
+
+
+
+
+
+										</tbody>
+									</table>
+
+
+
+								</div>
+								<div class="col-md-12 col-xs-12">
+									<div class="form-resp">
+										<H4>Over View</H4>
+										<div class="form-group">
+											<label for="branch">Total Lecture = ${totlec}</label><br>
+											<label for="branch">Attend Lecture = ${attlec}</label><br>
+											<label for="branch">Non-Attend Lecture =
+												${nonattendlec}</label> <br> <label for="branch">Status
+												= ${status} %</label> <br>
+
+
+
+										</div>
+
+									</div>
+								</div>
+								<div>
+									<button type="submit" class="btn btn-primary btn-block "
+										value="View All" name="action">Show</button>
+
+								</div>
+
+							</div>
+						</div>
+						<!-- 3 rd col end  -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#sem").on("change", function() {
+				var bname = $("#bname").val();
+
+				var sem = $("#sem").val();
+				/* alert(bname);
+				alert(sem); */
+				$.ajax({
+					url : "getPracticalSubject.jsp",//your jsp page name
+					data : {
+						bname : bname,
+						sem : sem
+					},//sending request to state.jsp page.
+					method : "POST",//HTTP method.
+					success : function(data) {
+						$("#subject").html(data);//output or response will display in state select box.
+					}
+				});
+			});
+		});
+	</script>
+
+
+</body>
+</html>
+<%@include file="footer.html"%>

@@ -1,0 +1,92 @@
+.clickme {
+    background-color: #EEEEEE;
+    padding: 8px 20px;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:5px;
+    color: #10a2ff;
+    cursor:pointer;
+}
+
+.lookdanger {
+    background-color:#FF0040;
+    color: #FFFFFF;
+}
+
+.lookdanger:hover {
+    background-color:#eb003b;
+    color: #FFFFFF;
+}
+
+.lookinfo {
+    background-color:#38da4c;
+    color: #FFFFFF;
+}
+
+.lookinfo:hover {
+    background-color:#00ff40;
+    color: #FFFFFF;
+}
+
+
+
+
+h3,h4,h5{
+	    color: #d6175e;
+}
+label{
+	color: #f0f3eb;
+}
+
+body{/* 
+background: #463360;
+background-image: url(bgimg.jpg);
+background-size: cover;
+background-repeat: no-repeat; */
+/* background: rgb(150,49,222);
+ *//* background: linear-gradient(90deg, rgba(150,49,222,1) 5%, rgba(135,21,187,1) 36%, rgba(172,59,212,1) 73%, rgba(154,0,255,1) 96%);	
+ */
+      /*background: linear-gradient(-135deg, #c850c0, #4158d0);*/
+ 
+ }
+form{
+	margin: 8% auto;
+	width: 50%;
+	box-shadow: 2px 3px 2px 2px #503f3f;
+	padding: 5% 10%;
+}
+.table-data {
+	    padding: 2px;
+	    height: 400px;
+	    overflow-y: auto;
+	    overflow-x: auto;
+	    
+}
+#buttons{
+	padding: 1% 20%;
+}
+.form-group input{
+	/*border-bottom: thin black solid;*/
+	/*background-color: #109aeab8;*/
+	outline: none;
+}
+.form-group input:focus{
+	outline: none;
+}
+
+/*  .container{
+	margin-top: 50px;
+	width: 50%;
+}  */
+/*Responsive Form Design Begin*/
+
+@media only screen and (max-width: 600px) {
+	form{
+	font-size: 2rem;
+	margin: 4% auto;
+	width: 80%;
+	box-shadow: 2px 3px 2px 2px #503f3f;
+	padding: 5% 5%;
+}
+}
+/*Responsive Form Design End*/

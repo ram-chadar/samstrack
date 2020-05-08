@@ -1,0 +1,17 @@
+body {
+	background: rgb(153, 228, 227);
+	background: linear-gradient(90deg, rgba(153, 228, 227, 0.9136029411764706)
+		0%, rgba(197, 169, 236, 1) 23%, rgba(179, 237, 234, 1) 70%,
+		rgba(242, 129, 242, 1) 100%);
+}
+
+.homediv {
+	height: 50%;
+	width: 100%;
+}
+
+marquee {
+	background-color: yellow;
+	color: red;
+	
+}
