@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -121,8 +120,12 @@ public class Theory_Attendance extends HttpServlet {
 				out.println(e);
 			} finally {
 				try {
-					con.close();
-					ps.close();
+					if(con!=null)
+						con.close();
+					if(ps!=null)
+						ps.close();
+					if(rs!=null)
+					rs.close();
 				} catch (Exception e2) {
 					e2.printStackTrace();
 					out.println(e2);
@@ -209,8 +212,11 @@ public class Theory_Attendance extends HttpServlet {
 				}
 
 				if (result > 0) {
-					String msg = rollno.length + " " + "Student Successfully Submited " + dateTime;
-					response.sendRedirect("takeClassAttendance.jsp?msg1=" + msg);
+					
+					request.setAttribute("msg",rollno.length + " " + "Student Successfully Submited " + dateTime);
+
+					RequestDispatcher rd = request.getRequestDispatcher("/takeClassAttendance.jsp");
+					rd.forward(request, response);
 				}
 
 				else {
@@ -234,8 +240,11 @@ public class Theory_Attendance extends HttpServlet {
 				out.println(e);
 			} finally {
 				try {
+					if(con!=null)
 					con.close();
+					if(rs!=null)
 					rs.close();
+					if(ps!=null)
 					ps.close();
 				} catch (Exception e2) {
 					e2.printStackTrace();

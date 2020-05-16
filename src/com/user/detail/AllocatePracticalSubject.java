@@ -66,7 +66,7 @@ public class AllocatePracticalSubject extends HttpServlet {
 				
 				if(result>0)
 				{
-					request.setAttribute("msg", "UPDATED \n NOW "+subject + " " + "Allocated To " + " " + user + " " + "Division" + " " + division +" Batch "+" "+batch);
+					request.setAttribute("msg", "UPDATED  NOW "+subject + " " + "Allocated To " + " " + user + " " + "Division" + " " + division +" Batch "+" "+batch);
 					RequestDispatcher rd = request.getRequestDispatcher("allocatePracticalSubject.jsp");
 					rd.forward(request, response);
 				}

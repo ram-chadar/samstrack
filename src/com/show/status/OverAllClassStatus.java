@@ -157,6 +157,13 @@ public class OverAllClassStatus extends HttpServlet {
 						}
 					}
 					if (record > 0) {
+						
+						request.setAttribute("sem", sem);
+						
+						request.setAttribute("branch", branch);
+						request.setAttribute("division", division);
+						request.setAttribute("month", month);
+						
 						request.setAttribute("statusList", statusList);
 						request.setAttribute("subjectSize", subjects.size());
 						request.setAttribute("subjects", subjects);
@@ -179,8 +186,11 @@ public class OverAllClassStatus extends HttpServlet {
 					out.println(e);
 				} finally {
 					try {
-						con.close();
-						ps.close();
+						if(con!=null)
+							con.close();
+						if(ps!=null)
+							ps.close();
+						if(rs!=null)
 						rs.close();
 					} catch (Exception e2) {
 						e2.printStackTrace();
@@ -289,6 +299,12 @@ public class OverAllClassStatus extends HttpServlet {
 						}
 					}
 					if (record > 0) {
+						
+						request.setAttribute("sem", sem);
+						request.setAttribute("branch", branch);
+						request.setAttribute("division", division);
+						
+						
 						request.setAttribute("statusList", statusList);
 						request.setAttribute("subjectSize", subjects.size());
 						request.setAttribute("subjects", subjects);
@@ -311,8 +327,11 @@ public class OverAllClassStatus extends HttpServlet {
 					out.println(e);
 				} finally {
 					try {
-						con.close();
-						ps.close();
+						if(con!=null)
+							con.close();
+						if(ps!=null)
+							ps.close();
+						if(rs!=null)
 						rs.close();
 					} catch (Exception e2) {
 						e2.printStackTrace();

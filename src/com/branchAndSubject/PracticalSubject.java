@@ -36,19 +36,12 @@ public class PracticalSubject extends HttpServlet {
 		subject = request.getParameter("subname");
 		subjectCode = request.getParameter("subcode");
 		button = request.getParameter("action");
-System.out.println(button);
-System.out.println(branchName);
+
 		PrintWriter out = response.getWriter();
 
 		if (button.equals("ADD")) {
 			try {
 				con = DBUtil.getDataSource().getConnection();
-				if (branchName.equals("") || sem.equals("") || subjectCode.equals("")) {
-					request.setAttribute("msg", "Fill All Fields");
-					RequestDispatcher rd = request.getRequestDispatcher("subjectDetail.jsp");
-					rd.forward(request, response);
-				} else {
-
 					ps = con.prepareStatement(
 							"select subject from practicalsubject where subject=? and branchname=? and sem=?");
 					ps.setString(1, subject);
@@ -82,15 +75,18 @@ System.out.println(branchName);
 							rd.forward(request, response);
 						}
 					}
-				}
+				
 
 			} catch (Exception e) {
 				e.printStackTrace();
 				out.println(e);
 			} finally {
 				try {
-					con.close();
-					ps.close();
+					if(con!=null)
+						con.close();
+					if(ps!=null)
+						ps.close();
+					if(rs!=null)
 					rs.close();
 				} catch (Exception e2) {
 					e2.printStackTrace();

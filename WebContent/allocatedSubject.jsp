@@ -19,7 +19,7 @@
 <script type="text/javascript" src="onlineJs/jquery.dataTables.min.js"></script>
 <script type="text/javascript"
 	src="onlineJs/dataTables.bootstrap4.min.js"></script>
-	
+
 
 <style type="text/css">
 .bs-example {
@@ -31,103 +31,119 @@
 
 </head>
 <body>
+
+<%
+Iterator division;
+List divdata = (List) request.getAttribute("theoryDivision");
+int theoryDivSize=divdata.size()+1;
+Iterator allocatedSubject;
+List data = (List) request.getAttribute("allocatedTheorySubject");
+
+Iterator division2;
+List divdata2 = (List) request.getAttribute("practicalDivision");
+int practicalDivSize=divdata2.size();
+
+Iterator batch;
+List batchdata = (List) request.getAttribute("batch");
+int batchSize=batchdata.size()	;
+
+
+Iterator allocatedpracticalSubject;
+List data2 = (List) request.getAttribute("allocatedPracticalSubject");
+%>
+
+
 	<div class="form-resp">
 		<div class="bs-example">
 			<h3 class="text-center">Allocated Theory Subjects</h3>
-			
-			
+
+
 			<div class="table-data table-responsive">
 				<table class="table table-dark table-striped " border="1"
-					id="example"  style="width:100%">
+					id="example" style="width: 100%">
 					<thead>
 						<tr>
 							<th class="text-center">Subject</th>
 							<%
-								Iterator division;
-								List divdata = (List) request.getAttribute("division");
-								if (!divdata.isEmpty()) {
-									for (division = divdata.iterator(); division.hasNext();) {
+								for (division = divdata.iterator(); division.hasNext();) {
 							%>
 							<th class="text-center"><%=division.next()%> Division</th>
 
 							<%
-								}
 								}
 							%>
 						</tr>
 					</thead>
 					<tbody>
 
-						<%
-							Iterator allocatedSubject;
-							List data = (List) request.getAttribute("allocatedSubject");
-							if (!data.isEmpty()) {
-								for (allocatedSubject = data.iterator(); allocatedSubject.hasNext();) {
-						%>
+						
 						<tr>
-							<td class="text-center"><div>
-									<%=allocatedSubject.next()%></div></td>
-							<td class="text-center"><div><%=allocatedSubject.next()%></div></td>
-							<td class="text-center"><div><%=allocatedSubject.next()%></div></td>
-
-
-						</tr>
 						<%
-							}
+							
+							if (!data.isEmpty()) {
+									for (allocatedSubject = data.iterator(); allocatedSubject.hasNext();) {
+						
+						for (int i = 0; i<theoryDivSize; i++) {
+							%>
+							
+							<td class="text-center"><div><%=allocatedSubject.next()%></div></td>
+							<%	
+						}
+						%>
+						</tr>
+						
+							<%
+								}
 							}
 						%>
 					</tbody>
 				</table>
 
-				
+
 			</div>
 		</div>
 	</div>
 
 	<script>
-	$(document).ready(function() {
-	    $('#example').DataTable( {
-	        "pagingType": "full_numbers",
-		    
-	        "scrollY": 300,
-	        "scrollX": true
-	    } );
-	} );
-	
+		$(document).ready(function() {
+			$('#example').DataTable({
+				"pagingType" : "full_numbers",
+
+				"scrollY" : 300,
+				"scrollX" : true
+			});
+		});
 	</script>
-	
-	
-	
-	<div class="form-resp">
+
+
+
+ <div class="form-resp">
 		<div class="bs-example">
 			<h3 class="text-center">Allocated Practical Subjects</h3>
-			
-			
+
+
 			<div class="table-data table-responsive">
 				<table class="table table-dark table-striped " border="1"
-					id="example2"  style="width:100%">
+					id="example2" style="width: 100%">
 					<thead>
 						<tr>
 							<th class="text-center">Subject</th>
-
 							<%
-								if (!divdata.isEmpty()) {
-									for (division = divdata.iterator(); division.hasNext();) {
+								
+
+								for (division2 = divdata2.iterator(); division2.hasNext();) {
 							%>
-							<th class="text-center" colspan="3"><%=division.next()%> Division</th>
+							<th colspan="<%=batchSize %>" class="text-center"><%=division2.next()%> Division</th>
 
 							<%
 								}
-								}
 							%>
-
 						</tr>
 						<tr>
 							<th></th>
 							<%
-								for (int i = 1; i <= 2; i++) {
-									Iterator batch;
-									List batchdata = (List) request.getAttribute("batch");
+								for (int i = 1; i <= divdata2.size(); i++) {
+									
 									if (!batchdata.isEmpty()) {
 										for (batch = batchdata.iterator(); batch.hasNext();) {
 							%>
@@ -144,51 +160,54 @@
 					</thead>
 					<tbody>
 
+						
+						<tr>
 						<%
-							Iterator allocatedpracticalSubject;
-							List data2 = (List) request.getAttribute("allocatedPracticalSubject");
+							
+
 							if (!data2.isEmpty()) {
 								for (allocatedpracticalSubject = data2.iterator(); allocatedpracticalSubject.hasNext();) {
+						
+						
+							for (int j = 0; j<practicalDivSize*batchSize+1; j++) {
+							%>
+							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
+							<%	
+							}
+							
+						
 						%>
-						<tr>
-							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
-
-							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
-							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
-							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
-
-							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
-							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
-							<td class="text-center"><div><%=allocatedpracticalSubject.next()%></div></td>
-
+							
 
 						</tr>
 						<%
 							}
-							}
+									}
+							
 						%>
-						
+
 					</tbody>
 				</table>
 
-				
+
 			</div>
 		</div>
 	</div>
 
 	<script>
-	$(document).ready(function() {
-	    $('#example2').DataTable( {
-	        "scrollY": 200,
-	        "scrollX": true
-	    } );
-	} );
-	
+		$(document).ready(function() {
+			$('#example2').DataTable({
+				"pagingType" : "full_numbers",
+				
+				"scrollY" : 200,
+				"scrollX" : true
+			});
+		});
 	</script>
+ 
 
 
 
-	
 </body>
 </html>
 <%@include file="footer.html"%>

@@ -63,7 +63,7 @@
 										class="form-control form-control-md" id="monthFrom"
 										name="monthFrom" required="required">
 										<%
-										String smonth=(String)request.getAttribute("smonth");
+										String smonth=(String)request.getAttribute("monthFrom");
 											if(smonth!=null)
 											{
 												%>
@@ -93,7 +93,7 @@
 										class="form-control form-control-md" id="monthTo"
 										name="monthTo" required="required">
 											<%
-										String emonth=(String)request.getAttribute("emonth");
+										String emonth=(String)request.getAttribute("monthTo");
 											if(emonth!=null)
 											{
 												%>

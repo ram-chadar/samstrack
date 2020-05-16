@@ -20,12 +20,13 @@ import com.dbcon.DBUtil;
 public class ForgotPassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("resource")
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		ResultSet rs=null;
 		Connection con = null;
-		PreparedStatement checkuser=null;
+		
 		PreparedStatement ps=null;
 		
 		PrintWriter out = response.getWriter();
@@ -39,9 +40,9 @@ public class ForgotPassword extends HttpServlet {
 
 			con = DBUtil.getDataSource().getConnection();
 
-			checkuser = con.prepareStatement("select username from login where username=?");
-			checkuser.setString(1, username);
-			rs = checkuser.executeQuery();
+			ps = con.prepareStatement("select username from login where username=?");
+			ps.setString(1, username);
+			rs = ps.executeQuery();
 			if (rs.next()) {
 
 				if (newPassword.equals(confPassword)) {
@@ -85,10 +86,12 @@ public class ForgotPassword extends HttpServlet {
 		}
 		finally {
 			try {
-				con.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				if(rs!=null)
 				rs.close();
-				checkuser.close();
-				ps.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 				out.println(e2);

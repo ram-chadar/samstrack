@@ -39,11 +39,11 @@ private static final long serialVersionUID = 1L;
 
 			EmailUtility.sendEmail(host, port, user, pass, recipient, subject, content);
 		
-			response.sendRedirect("studentRegistration.jsp?msg1=Email Successfully Send");
+			response.sendRedirect("studentRegistration.jsp?msg=Registration Successfully Completed Check Your Mail !");
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			response.sendRedirect("studentRegistration.jsp?msg1=Mail Not Send Check Internet Connection And Valid Email");
+			response.sendRedirect("studentRegistration.jsp?msg=Registration Successfully Completed But Mail Not Send Check Internet Connection Or Valid Email");
 
 		}
 

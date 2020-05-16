@@ -26,6 +26,58 @@
 </style>
   </head>
   <body>
+  <div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				
+					<div class="row">
+						<div class="col-md-4 col-xs-12 offset-md-2">
+							
+								<H5 class="text-center">Branch :-${branch}</H5>
+
+						
+						</div>
+
+						<div class="col-md-4 col-xs-12 offset-md-1">
+								<H5 class="text-center">Division :-${division}</H5>
+						</div>
+					</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				
+					<div class="row">
+						<div class="col-md-4 col-xs-12 offset-md-2">
+								<H5 class="text-center">Subject :-${subject}</H5>
+
+						</div>
+
+						<div class="col-md-4 col-xs-12 offset-md-1">
+								<H5 class="text-center">Sem :-${sem}</H5>
+						
+						</div>
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				
+					<div class="row">
+						<div class="col-md-4 col-xs-12 offset-md-2">
+								<H5 class="text-center">Batch :-${batch}</H5>
+
+						</div>
+
+						<div class="col-md-4 col-xs-12 offset-md-1">
+								<H5 class="text-center">Month :-${month}</H5>
+						
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
  <div class="form-resp">
 <div class="bs-example">
       

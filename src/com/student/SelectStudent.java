@@ -101,8 +101,11 @@ public class SelectStudent extends HttpServlet {
 			out.println(e);
 		} finally {
 			try {
-				con.close();
-				ps.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				if(rs!=null)
 				rs.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

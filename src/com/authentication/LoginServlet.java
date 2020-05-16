@@ -68,9 +68,12 @@ public class LoginServlet extends HttpServlet {
 			out.println(e);
 		} finally {
 			try {
-			rs.close();
-			ps.close();
-			con.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				if(rs!=null)
+				rs.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 				out.println(e2);

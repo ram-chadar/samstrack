@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import javax.management.relation.RelationSupportMBean;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,8 +54,11 @@ public class DeleteSubject extends HttpServlet {
 			out.println(e);
 		} finally {
 			try {
-				con.close();
-				ps.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				
 			} catch (Exception e2) {
 				e2.printStackTrace();
 				out.println(e2);

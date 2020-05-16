@@ -66,7 +66,13 @@ public class ShowClassStatus extends HttpServlet {
 					}
 					if (record > 0) {
 						request.setAttribute("StatusList", list);
-						request.setAttribute("head", "Class Month Status");
+						request.setAttribute("sem", sem);
+						request.setAttribute("subject", subject);
+						request.setAttribute("branch", branch);
+						request.setAttribute("division", division);
+						request.setAttribute("month", month);
+
+						request.setAttribute("head", "Theory Month Status");
 						RequestDispatcher rd = request.getRequestDispatcher("attendanceStatus.jsp");
 						rd.forward(request, response);
 					} else {
@@ -83,9 +89,12 @@ public class ShowClassStatus extends HttpServlet {
 					out.println(e);
 				} finally {
 					try {
-						con.close();
+						if(con!=null)
+							con.close();
+						if(ps!=null)
+							ps.close();
+						if(rs!=null)
 						rs.close();
-						ps.close();
 					} catch (Exception e2) {
 						e2.printStackTrace();
 						out.println(e2);
@@ -115,7 +124,13 @@ public class ShowClassStatus extends HttpServlet {
 					}
 					if (record > 0) {
 						request.setAttribute("StatusList", list);
-						request.setAttribute("head", "Class Sem Status");
+						
+						request.setAttribute("sem", sem);
+						request.setAttribute("subject", subject);
+						request.setAttribute("branch", branch);
+						request.setAttribute("division", division);
+						
+						request.setAttribute("head", "Theory Sem Status");
 						RequestDispatcher rd = request.getRequestDispatcher("attendanceStatus.jsp");
 						rd.forward(request, response);
 					} else {
@@ -140,9 +155,12 @@ public class ShowClassStatus extends HttpServlet {
 					out.println(e);
 				} finally {
 					try {
-						con.close();
+						if(con!=null)
+							con.close();
+						if(ps!=null)
+							ps.close();
+						if(rs!=null)
 						rs.close();
-						ps.close();
 					} catch (Exception e) {
 						e.printStackTrace();
 						out.println(e);

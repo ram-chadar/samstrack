@@ -23,7 +23,7 @@ public class BranchList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-System.out.println("dfgh");
+
 		Connection con = null;
 		ResultSet rs=null;
 		PreparedStatement ps=null;
@@ -72,9 +72,12 @@ System.out.println("dfgh");
 			out.println(e);
 		} finally {
 			try {
-				con.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				if(rs!=null)
 				rs.close();
-				ps.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 				out.println(e2);

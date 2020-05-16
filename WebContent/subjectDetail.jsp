@@ -60,9 +60,9 @@
 						</div>
 
 						<div class="form-group">
-							<label for="subjectcode">Subject Code [Optional]</label> <input
+							<label for="subjectcode">Subject Code [ Optional ]</label> <input
 								type="text" class="form-control" id="subcode"
-								placeholder="Subject Code [Optional" name="subcode">
+								placeholder="Subject Code [Optional]" name="subcode">
 						</div>
 
 						<div class="button-group" id="bttn">

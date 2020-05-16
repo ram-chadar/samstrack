@@ -61,7 +61,7 @@ if(msg!=null)
 if(msg1!=null)
 {%>
 <script type="text/javascript">
-	alert("<%=(String)request.getParameter("msg1")%>");
+alert("${msg1}");
   </script>
 <% 
 

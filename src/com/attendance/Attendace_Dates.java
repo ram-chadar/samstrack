@@ -92,19 +92,6 @@ public class Attendace_Dates extends HttpServlet {
 				} catch (Exception e2) {
 					out.println(e2);
 					e2.printStackTrace();
-				}finally {
-					try {
-						if(con!=null)
-							con.close();
-						if(rs!=null)
-							rs.close();
-						if(ps!=null)
-							ps.close();
-					} catch (Exception e2) {
-						
-						out.println(e2);
-						e2.printStackTrace();
-					}
 				}
 			}
 		}

@@ -59,8 +59,11 @@ public class UpdateAccYear extends HttpServlet {
 
 		} finally {
 			try {
-				con.close();
-				ps.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				
 			} catch (Exception e2) {
 				e2.printStackTrace();
 				out.println(e2);

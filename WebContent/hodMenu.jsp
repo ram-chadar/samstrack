@@ -53,7 +53,7 @@
 						<ul class="dropdown-menu" aria-labelledby="dropdown1">
 
 							<li class="dropdown-item"><a
-								href="allocatedSubjectOption.jsp">Allocated Subject</a></li>
+								href="allocatedSubjectOption.jsp">Allocated Subjects</a></li>
 
 							<li class="dropdown-item dropdown"><a
 								class="dropdown-toggle" id="dropdown2-1" data-toggle="dropdown"

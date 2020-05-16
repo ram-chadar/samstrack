@@ -33,7 +33,7 @@
     
   <div class="table-data">
   
-<table class="table table-dark table-striped" border="1" id="example">
+<table class="table table-dark table-striped" border="1" id="example"style="width:100%">
     <thead>
       <tr>
         <th class="text-center">Branch Name</th>

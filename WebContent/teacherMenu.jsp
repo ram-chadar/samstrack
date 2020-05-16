@@ -43,7 +43,7 @@
 		<div class="collapse navbar-collapse " id="navbarCollapse">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active"><a class="nav-link"
-					href="allocatedSubjectOption.jsp">Allocated Subject</a></li>
+					href="allocatedSubjectOption.jsp">Allocated Subjects</a></li>
 
 				<li class="nav-item dropdown active"><a
 					class="nav-link dropdown-toggle" id="dropdown1"

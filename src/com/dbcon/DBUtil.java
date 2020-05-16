@@ -18,12 +18,13 @@ public class DBUtil {
 			dataSource.setUsername("root");
 			dataSource.setPassword("admin");
 			
-			dataSource.setMinIdle(10);
+			dataSource.setMinIdle(-1);
 			dataSource.setMaxIdle(-1);
 			dataSource.setRemoveAbandonedTimeout(300);
-			dataSource.setMaxTotal(10);
+			dataSource.setMaxTotal(100);
 			dataSource.setMaxWaitMillis(1000);
 			dataSource.setDefaultAutoCommit(true);
+			
 			
 			
 		} catch (Exception e) {

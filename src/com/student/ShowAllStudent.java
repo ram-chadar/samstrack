@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -84,9 +83,12 @@ public class ShowAllStudent extends HttpServlet {
 
 		} finally {
 			try {
-				ps.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				if(rs!=null)
 				rs.close();
-				con.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				out.println(e);

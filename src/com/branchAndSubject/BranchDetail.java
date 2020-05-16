@@ -83,9 +83,12 @@ public class BranchDetail extends HttpServlet {
 						out.print(e);
 					} finally {
 						try {
-							con.close();
+							if(con!=null)
+								con.close();
+							if(ps!=null)
+								ps.close();
+							if(rs!=null)
 							rs.close();
-							ps.close();
 						} catch (Exception e2) {
 							e2.printStackTrace();
 							out.println(e2);

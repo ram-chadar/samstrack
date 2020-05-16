@@ -55,24 +55,7 @@ public class MonthlyAttendance extends HttpServlet {
 		List<String> total = new ArrayList<String>();
 
 		PrintWriter out = response.getWriter();
-		/*try {
-
-			if (accYear.equals("") || branch.equals("") || sem.equals("") || rollno.equals("") || subject.equals("")
-					|| month.equals("") || division.equals("")) {
-				request.setAttribute("msg", "Plz Fill All MANDATORY FIELDS");
-				RequestDispatcher rd2 = request.getRequestDispatcher("monthlyAttendance.jsp");
-				if (rd2 != null) {
-					rd2.forward(request, response);
-				}
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			request.setAttribute("msg", "Plz Fill All MANDATORY FIELDS");
-			RequestDispatcher rd2 = request.getRequestDispatcher("monthlyAttendance.jsp");
-			if (rd2 != null) {
-				rd2.forward(request, response);
-			}
-		}*/
+		
 		if (action.equals("class")) {
 			try {
 				con=DBUtil.getDataSource().getConnection();
@@ -155,9 +138,12 @@ public class MonthlyAttendance extends HttpServlet {
 				out.println(e);
 			} finally {
 				try {
-					con.close();
+					if(con!=null)
+						con.close();
+					if(ps!=null)
+						ps.close();
+					if(rs!=null)
 					rs.close();
-					ps.close();
 				} catch (Exception e2) {
 					e2.printStackTrace();
 					out.println(e2);
@@ -253,9 +239,12 @@ public class MonthlyAttendance extends HttpServlet {
 				out.println(e);
 			} finally {
 				try {
-					con.close();
+					if(con!=null)
+						con.close();
+					if(ps!=null)
+						ps.close();
+					if(rs!=null)
 					rs.close();
-					ps.close();
 				} catch (Exception e2) {
 					e2.printStackTrace();
 					out.println(e2);

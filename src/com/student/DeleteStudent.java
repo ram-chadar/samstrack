@@ -27,8 +27,8 @@ public class DeleteStudent extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Connection con=null;
-		PreparedStatement ps=null;
+		Connection con = null;
+		PreparedStatement ps = null;
 		String accYear, year, branchName, division;
 		int rollNo;
 		accYear = request.getParameter("accYear");
@@ -36,9 +36,8 @@ public class DeleteStudent extends HttpServlet {
 		branchName = request.getParameter("branch");
 		division = request.getParameter("division");
 		rollNo = Integer.parseInt(request.getParameter("rollNo"));
-PrintWriter out=response.getWriter();
+		PrintWriter out = response.getWriter();
 
-		
 		try {
 			con = DBUtil.getDataSource().getConnection();
 
@@ -62,16 +61,17 @@ PrintWriter out=response.getWriter();
 						+ year + "& branch=" + branchName + "& division=" + division);
 				rd.forward(request, response);
 			}
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			out.println(e);
 
-		}
-		finally {
+		} finally {
 			try {
-				con.close();
-				ps.close();
+				if(con!=null)
+					con.close();
+				if(ps!=null)
+					ps.close();
+				
 			} catch (Exception e2) {
 				e2.printStackTrace();
 				out.println(e2);

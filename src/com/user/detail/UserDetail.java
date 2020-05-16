@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dbcon.DBUtil;
 
@@ -34,6 +35,8 @@ public class UserDetail extends HttpServlet {
 		String phone = request.getParameter("phone");
 		Connection con = null;
 		PreparedStatement ps=null;
+		HttpSession session=request.getSession();
+
 		PrintWriter out=response.getWriter();
 		try {
 
@@ -44,8 +47,16 @@ public class UserDetail extends HttpServlet {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				request.setAttribute("msg", "User Already Exists");
-				RequestDispatcher rd = request.getRequestDispatcher("/userDetail.jsp");
-				rd.forward(request, response);
+				
+				if(session.getAttribute("userType").equals("Principle")) {
+					RequestDispatcher rd = request.getRequestDispatcher("userDetailPrinciple.jsp");
+					rd.forward(request, response);
+				}
+				else
+				{
+					RequestDispatcher rd = request.getRequestDispatcher("userDetail.jsp");
+					rd.forward(request, response);	
+				}
 			} else {
 				ps = con.prepareStatement(
 						"insert into login (username,password,usertype,branch,question,answer,email,phone)values(?,?,?,?,?,?,?,?)");
@@ -60,13 +71,30 @@ public class UserDetail extends HttpServlet {
 
 				int result = ps.executeUpdate();
 				if (result > 0) {
+					
 					request.setAttribute("msg", "User Added Successfully");
-					RequestDispatcher rd = request.getRequestDispatcher("userDetail.jsp");
+				if(session.getAttribute("userType").equals("Principle")) {
+					RequestDispatcher rd = request.getRequestDispatcher("userDetailPrinciple.jsp");
 					rd.forward(request, response);
+				}
+				else
+				{
+
+					RequestDispatcher rd = request.getRequestDispatcher("userDetail.jsp");
+					rd.forward(request, response);	
+				}
 				} else {
 					request.setAttribute("msg", "User Not Added");
-					RequestDispatcher rd = request.getRequestDispatcher("userDetail.jsp");
-					rd.forward(request, response);
+					if(session.getAttribute("userType").equals("Principle")) {
+						RequestDispatcher rd = request.getRequestDispatcher("userDetailPrinciple.jsp");
+						rd.forward(request, response);
+					}
+					else
+					{
+
+						RequestDispatcher rd = request.getRequestDispatcher("userDetail.jsp");
+						rd.forward(request, response);	
+					}
 				}
 			}
 

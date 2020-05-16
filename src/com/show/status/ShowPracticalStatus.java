@@ -70,6 +70,13 @@ public class ShowPracticalStatus extends HttpServlet {
 
 					}
 					if (record > 0) {
+						request.setAttribute("sem", sem);
+						request.setAttribute("subject", subject);
+						request.setAttribute("branch", branch);
+						request.setAttribute("division", division);
+						request.setAttribute("month", month);
+						request.setAttribute("batch", batch);
+						
 						request.setAttribute("StatusList", list);
 						request.setAttribute("head", "Practical Month Status");
 						RequestDispatcher rd = request.getRequestDispatcher("attendanceStatus.jsp");
@@ -123,6 +130,13 @@ public class ShowPracticalStatus extends HttpServlet {
 					}
 					if (record > 0) {
 						request.setAttribute("StatusList", list);
+						
+						request.setAttribute("sem", sem);
+						request.setAttribute("subject", subject);
+						request.setAttribute("branch", branch);
+						request.setAttribute("division", division);
+						request.setAttribute("batch", batch);
+						
 						request.setAttribute("head", "Practical Sem Status");
 						RequestDispatcher rd = request.getRequestDispatcher("attendanceStatus.jsp");
 						rd.forward(request, response);
@@ -143,9 +157,12 @@ public class ShowPracticalStatus extends HttpServlet {
 
 				} finally {
 					try {
-						con.close();
+						if(con!=null)
+							con.close();
+						if(ps!=null)
+							ps.close();
+						if(rs!=null)
 						rs.close();
-						ps.close();
 					} catch (Exception e2) {
 						e2.printStackTrace();
 						out.println(2);

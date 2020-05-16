@@ -83,7 +83,7 @@
 								</div>
 								<div class="form-group">
                       <label for="subject">Subject</label> 
-                      <select class="form-control form-control-md" id="subject" name="subject">
+                      <select class="form-control form-control-md" id="subject" name="subject" required="required">
                        
 					<option disabled value="">Select Subject</option>
 								
@@ -93,7 +93,7 @@
                     <!-- ***************** user start -->
                     <div class="form-group">
                       <label for="user">User</label> 
-                      <select class="form-control form-control-md" id="user" name="user">
+                      <select class="form-control form-control-md" id="user" name="user" required="required">
                        
 					<option disabled value="">Select User</option>
 								

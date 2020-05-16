@@ -28,7 +28,7 @@
 		<h3 class="text-center">All Class Room Subjects</h3>
 		
 		<div class="table-data form-resp">
-			<table class="table table-dark table-striped" border="1" id="example">
+			<table class="table table-dark table-striped" border="1" id="example" style="width:100%">
 				<thead>
 					<tr>
 						<!--  <th class="text-center">Branch Name</th> -->

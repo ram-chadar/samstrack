@@ -33,103 +33,112 @@ public class AllocatedSubject extends HttpServlet {
 			throws ServletException, IOException {
 		Connection con = null;
 		ResultSet rs = null;
-		PreparedStatement ps=null;
-		
-		PrintWriter out=response.getWriter();
-		
-		
-		int countRecord = 0;
-		int countPracticalRecord = 0;
+		PreparedStatement ps = null;
 
-		List<String> subjectList = new ArrayList<>();
-		List<String> divisionList = new ArrayList<>();
+		PrintWriter out = response.getWriter();
+
+		List<String> theorySubjectList = new ArrayList<>();
+		List<String> theoryDivisionList = new ArrayList<>();
 
 		List<String> practicalSubjectList = new ArrayList<>();
+		List<String> practicalDivisionList = new ArrayList<>();
 		List<String> batchList = new ArrayList<>();
 
-		List<String> allocatedSubjectList = new ArrayList<>();
+		List<String> allocatedTheorySubjectList = new ArrayList<>();
 		List<String> allocatedPracticalSubjectList = new ArrayList<>();
 
 		String branch, sem;
 		// accYear=request.getParameter("accYear");
 		branch = request.getParameter("branch");
 		sem = request.getParameter("sem");
-		
+
 		try {
 			con = DBUtil.getDataSource().getConnection();
 
-			ps = con
-					.prepareStatement("select distinct subject from allocateclasssubject where branch=? and sem=?");
+			ps = con.prepareStatement(
+					"select distinct subject from allocateclasssubject where branch=? and sem=?");
 			ps.setString(1, branch);
 			ps.setString(2, sem);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				subjectList.add(rs.getString("subject"));
+				theorySubjectList.add(rs.getString("subject"));
 			}
-
+			
 			ps = con.prepareStatement(
-					"select distinct division from allocateclasssubject where branch=?   ORDER BY division");
+					"select distinct division from allocateclasssubject where branch=? and sem=?  ORDER BY division");
 			ps.setString(1, branch);
-
+			ps.setString(2, sem);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				divisionList.add(rs.getString("division"));
+				theoryDivisionList.add(rs.getString("division"));
+
 			}
 
-			for (int i = 0; i < subjectList.size(); i++) {
-				allocatedSubjectList.add(subjectList.get(i));
+			for (int i = 0; i < theorySubjectList.size(); i++) {
+				allocatedTheorySubjectList.add(theorySubjectList.get(i));
 
-				for (int j = 0; j < divisionList.size(); j++) {
+				for (int j = 0; j < theoryDivisionList.size(); j++) {
 
 					ps = con.prepareStatement(
 							"select teacher from allocateclasssubject where branch=? and sem=? and division=? and subject=?");
 					ps.setString(1, branch);
 					ps.setString(2, sem);
-					ps.setString(3, divisionList.get(j));
-					ps.setString(4, subjectList.get(i));
+					ps.setString(3, theoryDivisionList.get(j));
+					ps.setString(4, theorySubjectList.get(i));
 
 					rs = ps.executeQuery();
 					if (rs.next()) {
 
-						allocatedSubjectList.add(rs.getString("teacher"));
-						countRecord++;
-						// allocatedSubjectList.add(rs.getString("division"));
+						allocatedTheorySubjectList.add(rs.getString("teacher"));
+					
 					} else {
-						allocatedSubjectList.add("Not Allocated");
+						allocatedTheorySubjectList.add("Not Allocated");
 					}
 				} // end divisionList For
 			} // end subjectList for
 
 			/*				**********************************************************/
-			ps = con
-					.prepareStatement("select distinct subject from allocatepracticalsubject where branch=? and sem=?");
+			ps = con.prepareStatement(
+					"select distinct subject from allocatepracticalsubject where branch=? and sem=?");
 			ps.setString(1, branch);
 			ps.setString(2, sem);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				practicalSubjectList.add(rs.getString("subject"));
+				
 			}
-
+			
 			ps = con.prepareStatement(
-					"select distinct batch from allocatepracticalsubject where branch=?  ORDER BY batch");
+					"select distinct division from allocatepracticalsubject where branch=? and sem=?  ORDER BY division");
 			ps.setString(1, branch);
-
+			ps.setString(2, sem);
 			rs = ps.executeQuery();
 			while (rs.next()) {
+			
+				practicalDivisionList.add(rs.getString("division"));
+				
+			}
+			ps = con.prepareStatement(
+					"select distinct batch from allocatepracticalsubject where branch=? and sem=?  ORDER BY batch");
+			ps.setString(1, branch);
+			ps.setString(2, sem);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				
 				batchList.add(rs.getString("batch"));
 			}
 
 			for (int i = 0; i < practicalSubjectList.size(); i++) {
 				allocatedPracticalSubjectList.add(practicalSubjectList.get(i));
 
-				for (int j = 0; j < divisionList.size(); j++) {
+				for (int j = 0; j < practicalDivisionList.size(); j++) {
 					for (int k = 0; k < batchList.size(); k++) {
 
 						ps = con.prepareStatement(
 								"select teacher from allocatepracticalsubject where branch=? and sem=? and division=? and batch=? and subject=?");
 						ps.setString(1, branch);
 						ps.setString(2, sem);
-						ps.setString(3, divisionList.get(j));
+						ps.setString(3, theoryDivisionList.get(j));
 						ps.setString(4, batchList.get(k));
 						ps.setString(5, practicalSubjectList.get(i));
 
@@ -137,7 +146,6 @@ public class AllocatedSubject extends HttpServlet {
 						if (rs.next()) {
 
 							allocatedPracticalSubjectList.add(rs.getString("teacher"));
-							countPracticalRecord++;
 							// allocatedSubjectList.add(rs.getString("division"));
 						} else {
 							allocatedPracticalSubjectList.add("Not Allocated");
@@ -147,34 +155,68 @@ public class AllocatedSubject extends HttpServlet {
 				} // end division
 			} // end subjectList for
 
-			if (countRecord > 0 && countPracticalRecord > 0) {
-				request.setAttribute("division", divisionList);
+			if (theorySubjectList.size() > 0 ) 
+				{
+					request.setAttribute("theoryDivision", theoryDivisionList);
+					request.setAttribute("allocatedTheorySubject", allocatedTheorySubjectList);
+					request.setAttribute("msg", "Total Allocated Theory Subject :"+theorySubjectList.size());
+
+					
+				}
+				else
+				{
+					request.setAttribute("msg", "Record Not Found For Practical Subject! Subject Not Allocated");
+					RequestDispatcher rd = request.getRequestDispatcher("allocatedSubjectOption.jsp");
+					rd.forward(request, response);
+				}
+			
+			if(practicalSubjectList.size()>0)
+			{
+				request.setAttribute("practicalDivision", practicalDivisionList);
+				request.setAttribute("practicalDivSize", practicalDivisionList.size());
 				request.setAttribute("batch", batchList);
 				request.setAttribute("allocatedPracticalSubject", allocatedPracticalSubjectList);
-				request.setAttribute("allocatedSubject", allocatedSubjectList);
+				request.setAttribute("msg1", "Total Allocated Practical Subject :"+practicalSubjectList.size());
 
+			}
+			else
+			{
+				request.setAttribute("msg1", "Record Not Found Practical Subject! Subject Not Allocated");
+
+			}
+			/*	
+			
+			for (String string : allocatedTheorySubjectList) {
+				System.out.print(string +"\t");
+			}
+			
+			System.out.println("**************");
+			for (String string : allocatedPracticalSubjectList) {
+				System.out.print(string +"\t");
+				
+			}*/
+			
 				RequestDispatcher rd = request.getRequestDispatcher("allocatedSubject.jsp");
 				rd.forward(request, response);
-			} else {
-				request.setAttribute("msg", "Record Not Found ! Subject Not Allocated");
-				RequestDispatcher rd = request.getRequestDispatcher("allocatedSubjectOption.jsp");
-				rd.forward(request, response);
-			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			out.println(e);
 		} finally {
-			if (con != null) {
-				try {
+
+			try {
+				if (con != null)
 					con.close();
+				if (rs != null)
 					rs.close();
-					ps.close(); 
-				} catch (Exception e2) {
-					e2.printStackTrace();
-					out.println(e2);
-				}
+				if (ps != null)
+					ps.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+				out.println(e2);
 			}
+
 		}
 
 	}

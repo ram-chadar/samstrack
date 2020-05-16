@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -119,21 +118,18 @@ public class Practical_Attendance extends HttpServlet {
 
 					RequestDispatcher rd = request.getRequestDispatcher("takePracticalAttendance.jsp");
 					rd.forward(request, response);
-					/*
-					 * System.out.println(studentName); System.out.println(dateTime);
-					 * System.out.println("accyear="+accYear); System.out.println("year="+year);
-					 * System.out.println("division="+division);
-					 * System.out.println("branch="+branchName);
-					 * System.out.println("subject="+subject); System.out.println("sem="+sem);
-					 */
+					
 				} catch (Exception e) {
 					out.println(e);
 					e.printStackTrace();
 				} finally {
 					try {
-						con.close();
-						ps.close();
-						rs.close();
+						if (con != null)
+							con.close();
+						if (ps != null)
+							ps.close();
+						if (rs != null)
+							rs.close();
 					} catch (Exception e2) {
 						out.println(e2);
 						e2.printStackTrace();
@@ -242,8 +238,9 @@ public class Practical_Attendance extends HttpServlet {
 						}
 					}
 					if (result > 0) {
-						String msg = rollno.length + " " + " Student Successfully Submited " + dateTime;
-						response.sendRedirect("takePracticalAttendance.jsp?msg1=" + msg);
+						request.setAttribute("msg", rollno.length + " " + " Student Successfully Submited " + dateTime);
+						RequestDispatcher rd = request.getRequestDispatcher("/takePracticalAttendance.jsp");
+						rd.forward(request, response);
 					}
 
 					else {
@@ -254,7 +251,7 @@ public class Practical_Attendance extends HttpServlet {
 
 				} catch (NullPointerException n) {
 					request.setAttribute("msg", "Plz Fill Or Check All Field");
-					RequestDispatcher rd = request.getRequestDispatcher("/takeClassAttendance.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/takePracticalAttendance.jsp");
 					rd.forward(request, response);
 				}
 
@@ -267,8 +264,11 @@ public class Practical_Attendance extends HttpServlet {
 					out.println(e);
 				} finally {
 					try {
-						con.close();
-						ps.close();
+						if(con!=null)
+							con.close();
+						if(ps!=null)
+							ps.close();
+						if(rs!=null)
 						rs.close();
 					} catch (Exception e2) {
 
@@ -286,17 +286,17 @@ public class Practical_Attendance extends HttpServlet {
 							subject, dateTime);
 					if (bb == true) {
 						request.setAttribute("msg", "Attendance Deleted Successfully ");
-						RequestDispatcher rd = request.getRequestDispatcher("/takeClassAttendance.jsp");
+						RequestDispatcher rd = request.getRequestDispatcher("/takePracticalAttendance.jsp");
 						rd.forward(request, response);
 
 					} else {
 						request.setAttribute("msg", "Something Wrong Attendance Not Deleted For Given Crediential");
-						RequestDispatcher rd = request.getRequestDispatcher("/takeClassAttendance.jsp");
+						RequestDispatcher rd = request.getRequestDispatcher("/takePracticalAttendance.jsp");
 						rd.forward(request, response);
 					}
 				} else {
 					request.setAttribute("msg", "Attendance Not Found For Given Credientials ! Take Attendance");
-					RequestDispatcher rd = request.getRequestDispatcher("/takeClassAttendance.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/takePracticalAttendance.jsp");
 					rd.forward(request, response);
 				}
 

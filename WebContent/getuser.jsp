@@ -17,18 +17,41 @@ if(session.getAttribute("userType")==null)
         <select class="form-control" name="user" id="user">
           <option value="">Select User</option>
             <%
-                String bname = request.getParameter("bname");
-            	Connection con = DBUtil.getDataSource().getConnection();
-                PreparedStatement ps = con.prepareStatement("select username from login where branch=?");
-                ps.setString(1, bname);
-              
-                ResultSet rs=ps.executeQuery();
-                while (rs.next()) {
-            %>
-            <option value="<%=rs.getString("username")%>"><%=rs.getString("username")%></option>
-            <%
-                }
-            %>
+            Connection con=null;
+            PreparedStatement ps=null;
+            ResultSet rs=null;
+            try
+            {
+            	 String bname = request.getParameter("bname");
+             	 con = DBUtil.getDataSource().getConnection();
+                  ps = con.prepareStatement("select username from login where branch=?");
+                 ps.setString(1, bname);
+               
+                  rs=ps.executeQuery();
+                 while (rs.next()) {
+             %>
+             <option value="<%=rs.getString("username")%>"><%=rs.getString("username")%></option>
+             <%
+                 }
+             
+            }
+            catch(Exception e)
+            {
+            	e.printStackTrace();
+            }
+            finally{
+            	try{
+            		con.close();
+            		ps.close();
+            		rs.close();
+            	}
+            	catch(Exception e)
+            	{
+            		e.printStackTrace();
+            	}
+            	
+            }
+               %>
         </select>
      </body>
 </html>

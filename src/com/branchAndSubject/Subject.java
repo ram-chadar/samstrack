@@ -41,48 +41,53 @@ public class Subject extends HttpServlet {
 		if (button.equals("ADD")) {
 			try {
 				con = DBUtil.getDataSource().getConnection();
-				if (branchName.equals("") || sem.equals("") || subjectCode.equals("")) {
-					request.setAttribute("msg", "Fill All Fields");
+				ps = con.prepareStatement("select subject from subject where subject=? and branchname=? and sem=?");
+				ps.setString(1, subject);
+				ps.setString(2, branchName);
+				ps.setString(3, sem);
+
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					request.setAttribute("msg", "Already Exists");
 					RequestDispatcher rd = request.getRequestDispatcher("subjectDetail.jsp");
 					rd.forward(request, response);
-				} else {
+				}
 
+				else {
 					ps = con.prepareStatement(
-							"select subject from subject where subject=? and branchname=? and sem=?");
-					ps.setString(1, subject);
-					ps.setString(2, branchName);
-					ps.setString(3, sem);
+							"insert into subject(branchname,sem,subject,subjectcode) values(?,?,?,?)");
+					ps.setString(1, branchName);
+					ps.setString(2, sem);
+					ps.setString(3, subject);
+					ps.setString(4, subjectCode);
 
-					rs = ps.executeQuery();
-					if (rs.next()) {
-						request.setAttribute("msg", "Already Exists");
-						RequestDispatcher rd = request.getRequestDispatcher("subjectDetail.jsp");
+					int result = ps.executeUpdate();
+					if (result > 0) {
+						request.setAttribute("msg", "Subject Added Succesfully");
+						RequestDispatcher rd = request.getRequestDispatcher("/subjectDetail.jsp");
+						rd.forward(request, response);
+					} else {
+						request.setAttribute("msg", "Something Wrong Subject Not Added");
+						RequestDispatcher rd = request.getRequestDispatcher("/subjectDetail.jsp");
 						rd.forward(request, response);
 					}
-
-					else {
-						ps = con.prepareStatement(
-								"insert into subject(branchname,sem,subject,subjectcode) values(?,?,?,?)");
-						ps.setString(1, branchName);
-						ps.setString(2, sem);
-						ps.setString(3, subject);
-						ps.setString(4, subjectCode);
-
-						int result = ps.executeUpdate();
-						if (result > 0) {
-							request.setAttribute("msg", "Subject Added Succesfully");
-							RequestDispatcher rd = request.getRequestDispatcher("/subjectDetail.jsp");
-							rd.forward(request, response);
-						} else {
-							request.setAttribute("msg", "Something Wrong Subject Not Added");
-							RequestDispatcher rd = request.getRequestDispatcher("/subjectDetail.jsp");
-							rd.forward(request, response);
-						}
-					}
 				}
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				out.println(e);
+			} finally {
+				try {
+					if (con != null)
+						con.close();
+					if (ps != null)
+						con.close();
+					if (rs != null)
+						rs.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+					out.print(e2);
+				}
 			}
 		} else if (button.equals("VIEW ALL")) {
 			try {
